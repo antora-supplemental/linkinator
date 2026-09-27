@@ -39,10 +39,10 @@ describe('linkinator wrap', () => {
     assert.equal(meta.purpose, 'link-ux')
   })
 
-  it('register hooks sitePublished', () => {
+  it('register hooks pagesComposed', () => {
     const handlers = {}
     const fake = { on (e, fn) { handlers[e] = fn }, getLogger () { return { info () {} } } }
     ext.register.call(fake, { config: {} })
-    assert.equal(typeof handlers.sitePublished, 'function')
+    assert.equal(typeof handlers.pagesComposed, 'function')
   })
 })

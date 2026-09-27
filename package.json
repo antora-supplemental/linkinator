@@ -1,6 +1,6 @@
 {
   "name": "@antora-supplemental/linkinator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Link-inator: click-time outbound link validity hints + archive.org/Wayback button (Antora UI bolt-on)",
   "license": "MIT",
   "author": "Ryan Johnson (https://github.com/AMDphreak)",
