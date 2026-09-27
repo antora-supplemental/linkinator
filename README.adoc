@@ -8,7 +8,7 @@
 == What it does
 
 * Wraps outbound `http(s)` anchors in `span.lini` chrome
-* Muted validity background + **sharp** 1px border (ok / invalid / unchecked / …)
+* Muted validity background + **sharp** 1px border (ok / invalid / unchecked / â€¦)
 * archive.org **Wayback** icon button (`data-wayback`)
 * Optional live probe via `window.LINKINATOR_PROBE_URL` proxy (no secrets in the page)
 
@@ -33,6 +33,29 @@ antora:
 
 Ship `ui/css/linkinator.css` + `ui/js/linkinator.js` via supplemental UI (or rely on the extension's `siteCatalog` inject under `_/`).
 
+== Live probe (`LINKINATOR_PROBE_URL`)
+
+Browsers cannot reliably CORS-`HEAD` arbitrary outbound URLs. For live status on hover, point the page at a **same-origin or CORS-enabled proxy**:
+
+[source,html]
+----
+<script>
+  // IMPORTANT: include the trailing "?url=" — the client appends encodeURIComponent(href)
+  window.LINKINATOR_PROBE_URL = 'https://YOUR_PROXY/probe?url='
+</script>
+----
+
+Behavior:
+
+* If `window.LINKINATOR_PROBE_URL` is **unset**, Link-inator sets status to `unknown` for `data-lini-live="true"` anchors.
+* If set, the client calls `fetch(LINKINATOR_PROBE_URL + encodeURIComponent(href))` and expects JSON `{ ok, status }` (`status`: `ok` | `invalid` | `unknown` | …).
+
+Reference probe (alongside the CI dispatch proxy):
+
+https://github.com/antora-supplemental/asciidoc-link-validator/tree/main/examples/dispatch-proxy[`asciidoc-link-validator/examples/dispatch-proxy`] — `GET /probe?url=`
+
+Env on that stub: `PROBE_ALLOWLIST` (optional host suffix allowlist), `CORS_ORIGIN`.
+
 == Related
 
 * link:antora-registry.md[]
@@ -40,4 +63,4 @@ Ship `ui/css/linkinator.css` + `ui/js/linkinator.js` via supplemental UI (or rel
 
 == Contact
 
-https://github.com/AMDphreak[Ryan Johnson] · support@devcentr.org
+https://github.com/AMDphreak[Ryan Johnson] Â· support@devcentr.org
