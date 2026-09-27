@@ -1,0 +1,43 @@
+= Link-inator
+:description: Click-time outbound link validity hints with muted colors, sharp borders, and an archive.org / Wayback button.
+:page-orig-author: Ryan Johnson
+:page-last-edited: 2026-09-27
+
+**Link-inator** (informal Doofenshmirtz name) is a separate Antora UI bolt-on from build-time https://github.com/antora-supplemental/link-validator[link-validator] / https://github.com/antora-supplemental/asciidoc-link-validator[asciidoc-link-validator].
+
+== What it does
+
+* Wraps outbound `http(s)` anchors in `span.lini` chrome
+* Muted validity background + **sharp** 1px border (ok / invalid / unchecked / …)
+* archive.org **Wayback** icon button (`data-wayback`)
+* Optional live probe via `window.LINKINATOR_PROBE_URL` proxy (no secrets in the page)
+
+== Install
+
+[source,bash]
+----
+pnpm add -D github:antora-supplemental/linkinator#v0.1.0
+# or track main:
+pnpm add -D github:antora-supplemental/linkinator#main
+----
+
+== Playbook
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora-supplemental/linkinator'
+      statusDefault: unchecked
+----
+
+Ship `ui/css/linkinator.css` + `ui/js/linkinator.js` via supplemental UI (or rely on the extension's `siteCatalog` inject under `_/`).
+
+== Related
+
+* link:antora-registry.md[]
+* https://github.com/antora-supplemental/asciidoc-link-validator[DESIGN notes in core]
+
+== Contact
+
+https://github.com/AMDphreak[Ryan Johnson] · support@devcentr.org

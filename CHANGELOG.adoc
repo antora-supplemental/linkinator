@@ -1,0 +1,5 @@
+= Changelog
+
+== 0.1.0 — 2026-09-27
+
+* Initial scaffold: `wrapExternalLinks`, Wayback button, muted status CSS (sharp borders), Antora `sitePublished` register, registry metadata export, tests.

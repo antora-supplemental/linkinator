@@ -1,0 +1,62 @@
+/* Link-inator: muted validity colors + sharp (not soft) border */
+.lini {
+  display: inline;
+  position: relative;
+}
+.lini > a {
+  border: 1px solid transparent;
+  border-radius: 0; /* sharp */
+  padding: 0 0.1em;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.lini-status-ok > a {
+  border-color: #86efac;
+  background: rgba(134, 239, 172, 0.18); /* muted */
+  color: inherit;
+}
+.lini-status-invalid > a,
+.lini-status-4xx > a,
+.lini-status-5xx > a {
+  border-color: #fca5a5;
+  background: rgba(252, 165, 165, 0.18);
+  color: inherit;
+}
+.lini-status-unknown > a,
+.lini-status-unchecked > a {
+  border-color: #d4d4d8;
+  background: rgba(212, 212, 216, 0.14);
+}
+.lini-status-timeout > a {
+  border-color: #a5b4fc;
+  background: rgba(165, 180, 252, 0.16);
+}
+.lini-wayback {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.2em;
+  padding: 0 0.25em;
+  border: 1px solid #a1a1aa; /* sharp */
+  border-radius: 0;
+  background: #fafafa;
+  color: #52525b;
+  font: inherit;
+  font-size: 0.85em;
+  line-height: 1.2;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+.lini-wayback:hover {
+  background: #f4f4f5;
+  border-color: #71717a;
+}
+.lini-status-text {
+  margin-left: 0.25em;
+  font-size: 0.75em;
+  color: #71717a;
+}
+.lini.is-status-visible .lini-status-text {
+  display: inline;
+}
