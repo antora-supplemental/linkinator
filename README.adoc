@@ -8,7 +8,7 @@
 == What it does
 
 * Wraps outbound `http(s)` anchors in `span.lini` chrome
-* Muted validity background + **sharp** 1px border (ok / invalid / unchecked / â€¦)
+* Muted validity background + **sharp** 1px border (ok / invalid / unchecked / …)
 * archive.org **Wayback** icon button (`data-wayback`)
 * Optional live probe via `window.LINKINATOR_PROBE_URL` proxy (no secrets in the page)
 
@@ -63,4 +63,4 @@ Env on that stub: `PROBE_ALLOWLIST` (optional host suffix allowlist), `CORS_ORIG
 
 == Contact
 
-https://github.com/AMDphreak[Ryan Johnson] Â· support@devcentr.org
+https://github.com/AMDphreak[Ryan Johnson] · support@devcentr.org
