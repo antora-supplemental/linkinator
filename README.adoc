@@ -1,9 +1,9 @@
-= Link-inator
+= Linkinator
 :description: Click-time outbound link validity hints with muted colors, sharp borders, and an archive.org / Wayback button.
 :page-orig-author: Ryan Johnson
-:page-last-edited: 2026-09-27
+:page-last-edited: 2026-10-16
 
-**Link-inator** (informal Doofenshmirtz name) is a separate Antora UI bolt-on from build-time https://github.com/antora-supplemental/link-validator[link-validator] / https://github.com/antora-supplemental/asciidoc-link-validator[asciidoc-link-validator].
+**Linkinator** is a separate Antora UI bolt-on from build-time https://github.com/antora-supplemental/link-validator[link-validator] / https://github.com/antora-supplemental/asciidoc-link-validator[asciidoc-link-validator].
 
 == What it does
 
@@ -47,7 +47,7 @@ Browsers cannot reliably CORS-`HEAD` arbitrary outbound URLs. For live status on
 
 Behavior:
 
-* If `window.LINKINATOR_PROBE_URL` is **unset**, Link-inator sets status to `unknown` for `data-lini-live="true"` anchors.
+* If `window.LINKINATOR_PROBE_URL` is **unset**, Linkinator sets status to `unknown` for `data-lini-live="true"` anchors.
 * If set, the client calls `fetch(LINKINATOR_PROBE_URL + encodeURIComponent(href))` and expects JSON `{ ok, status }` (`status`: `ok` | `invalid` | `unknown` | …).
 
 Reference probe (alongside the CI dispatch proxy):

@@ -1,5 +1,5 @@
 ---
-name: "Link-inator"
+name: "Linkinator"
 description: "Click-time link validity hints + archive.org/Wayback button (UI bolt-on)."
 purpose: "link-ux"
 layer: "bolt-on"
@@ -9,7 +9,7 @@ asciidoctor: false
 lifecycleHooks:
   - sitePublished
 processorSubtypes: []
-informalName: "Link-inator"
+informalName: "Linkinator"
 ---
 
 # Overview

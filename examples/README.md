@@ -1,4 +1,4 @@
-# Link-inator examples
+# Linkinator examples
 
 Live probe stub lives with the shared CI proxy:
 

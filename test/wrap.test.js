@@ -40,7 +40,7 @@ describe('linkinator wrap', () => {
 
   it('exports register + registry meta', () => {
     assert.equal(typeof ext.register, 'function')
-    assert.equal(meta.informalName, 'Link-inator')
+    assert.equal(meta.informalName, 'Linkinator')
     assert.equal(meta.layer, 'bolt-on')
     assert.equal(meta.purpose, 'link-ux')
   })
