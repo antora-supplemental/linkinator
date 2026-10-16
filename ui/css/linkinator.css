@@ -1,18 +1,18 @@
-/* Link-inator: muted validity colors + sharp (not soft) border */
+/* Link-inator: muted validity colors + hover Wayback bar */
 .lini {
   display: inline;
   position: relative;
 }
 .lini > a {
   border: 1px solid transparent;
-  border-radius: 0; /* sharp */
+  border-radius: 0;
   padding: 0 0.1em;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .lini-status-ok > a {
   border-color: #86efac;
-  background: rgba(134, 239, 172, 0.18); /* muted */
+  background: rgba(134, 239, 172, 0.18);
   color: inherit;
 }
 .lini-status-invalid > a,
@@ -31,27 +31,61 @@
   border-color: #a5b4fc;
   background: rgba(165, 180, 252, 0.16);
 }
+
+.lini-hoverbar {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  bottom: calc(100% + 2px);
+  display: none;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.12rem 0.2rem;
+  border: 1px solid #a1a1aa;
+  border-radius: 2px;
+  background: #fafafa;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  pointer-events: auto;
+}
+.lini:hover .lini-hoverbar,
+.lini:focus-within .lini-hoverbar {
+  display: inline-flex;
+}
+
 .lini-wayback {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-left: 0.2em;
-  padding: 0 0.25em;
-  border: 1px solid #a1a1aa; /* sharp */
-  border-radius: 0;
-  background: #fafafa;
+  box-sizing: border-box;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #a1a1aa;
+  border-radius: 2px;
+  background: #fff;
   color: #52525b;
   font: inherit;
-  font-size: 0.85em;
-  line-height: 1.2;
+  font-size: 0.62rem;
+  line-height: 1;
   cursor: pointer;
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 .lini-wayback:hover {
   background: #f4f4f5;
   border-color: #71717a;
 }
+.lini-wayback-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+}
+
 .lini-status-text {
   margin-left: 0.25em;
   font-size: 0.75em;

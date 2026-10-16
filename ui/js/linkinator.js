@@ -24,14 +24,12 @@
       if (url) window.open(url, '_blank', 'noopener,noreferrer')
     })
 
-    // Optional: on focus/hover show status text; HEAD probe when data-lini-live="true"
     document.querySelectorAll('.lini[data-lini-live="true"]').forEach(function (el) {
       var href = el.getAttribute('data-lini-href')
       if (!href || el.getAttribute('data-lini-probed')) return
       el.addEventListener('mouseenter', function () {
         if (el.getAttribute('data-lini-probed')) return
         el.setAttribute('data-lini-probed', '1')
-        // Opaque no-cors probe is limited; mark unknown unless a same-origin proxy is configured
         var proxy = window.LINKINATOR_PROBE_URL
         if (!proxy) {
           setStatus(el, 'unknown')

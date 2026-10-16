@@ -1,5 +1,10 @@
 = Changelog
 
+== 0.1.2 — 2026-10-16
+
+* Wrap outbound links only inside `article.doc` prose — skip site header, footer, and `aside.page-context` metadata.
+* Wayback control moves to a compact hover/focus bar (`.lini-hoverbar`) instead of an inline button beside every link.
+
 == 0.1.0 — 2026-09-27
 
 * Initial scaffold: `wrapExternalLinks`, Wayback button, muted status CSS (sharp borders), Antora `sitePublished` register, registry metadata export, tests.

@@ -7,9 +7,9 @@
 
 == What it does
 
-* Wraps outbound `http(s)` anchors in `span.lini` chrome
+* Wraps outbound `http(s)` anchors in `article.doc` prose only (skips header, footer, and `page-context` metadata)
 * Muted validity background + **sharp** 1px border (ok / invalid / unchecked / …)
-* archive.org **Wayback** icon button (`data-wayback`)
+* archive.org **Wayback** control in a compact hover/focus bar (`.lini-hoverbar`), not inline beside every link
 * Optional live probe via `window.LINKINATOR_PROBE_URL` proxy (no secrets in the page)
 
 == Install
