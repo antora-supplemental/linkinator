@@ -3,6 +3,7 @@
 == 0.1.8 — 2026-10-17
 
 * **Wayback chip placement:** `.lini-actions` anchors to the link’s right edge (`left: 100%` + gap), vertically centered (`top: 50%` / `translateY(-50%)`) instead of floating above the line.
+* **Hover bridge:** `.lini::after` hit area spans the gap to the chip so moving from link → ⧉ does not dismiss the control before click.
 
 == 0.1.7 — 2026-10-17
 

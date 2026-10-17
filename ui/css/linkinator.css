@@ -58,17 +58,36 @@
   padding: 0.05em 0.2em;
 }
 
+/* Invisible bridge (link → chip) while hovered — avoids losing :hover in the gap */
+.lini::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.lini:hover::after,
+.lini:focus-within::after {
+  width: calc(0.35rem + 1.35rem);
+  height: 1.75rem;
+  pointer-events: auto;
+}
+
 /* Fully out of flow; hidden = display:none (zero footprint) */
 .lini-actions {
   position: absolute;
-  z-index: 25;
-  left: calc(100% + 0.35rem);
+  z-index: 26;
+  left: 100%;
   top: 50%;
   transform: translateY(-50%);
   display: none;
   align-items: center;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 0.35rem;
   border: 0;
   width: max-content;
   max-width: none;
@@ -77,7 +96,8 @@
 }
 
 .lini:hover .lini-actions,
-.lini:focus-within .lini-actions {
+.lini:focus-within .lini-actions,
+.lini-actions:hover {
   display: flex;
   pointer-events: auto;
   transform: translateY(-50%);
