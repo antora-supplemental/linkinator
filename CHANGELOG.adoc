@@ -3,6 +3,7 @@
 == 0.1.7 — 2026-10-17
 
 * **Zero layout footprint:** idle `.lini-actions` uses `display: none` (not opacity-only in flow); `span.lini` is `inline-block` sized by the anchor only so the ⧉ chip never reserves line space until hover.
+* **Transparent at rest:** `a.lini-link` matches theme prose links (no default border/background/pill); hover/focus adds `--adt-accent-soft`. Validity borders appear only after live probe (`.is-status-visible`).
 
 == 0.1.6 — 2026-10-17
 

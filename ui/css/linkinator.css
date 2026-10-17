@@ -1,4 +1,4 @@
-/* Linkinator: validity chrome + floating Wayback control (Valentus --adt-* tokens) */
+/* Linkinator: floating Wayback + optional validity hints (Valentus --adt-* tokens) */
 
 /* Shrink-wrap the anchor; absolutely positioned children do not expand this box */
 .lini {
@@ -7,19 +7,22 @@
   vertical-align: baseline;
   max-width: 100%;
   line-height: inherit;
+  border: 0;
+  background: transparent;
 }
 
+/* At rest: indistinguishable from theme prose links */
 .lini > a.lini-link {
   display: inline;
-  border: 1px solid transparent;
-  border-radius: var(--adt-radius-sm, 0.25rem);
-  padding: 0.05em 0.2em;
   margin: 0;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-  text-decoration-color: color-mix(in srgb, var(--adt-accent, #0f766e) 45%, transparent);
+  padding: 0;
+  border: none;
+  border-radius: var(--adt-radius-sm, 0.25rem);
+  background: transparent;
   color: inherit;
-  transition: var(--adt-transition, border-color 0.15s ease, background-color 0.15s ease);
+  text-decoration: inherit;
+  text-underline-offset: inherit;
+  transition: var(--adt-transition, background-color 0.15s ease, border-color 0.15s ease);
 }
 
 .lini > a.lini-link:hover,
@@ -27,27 +30,32 @@
   background: var(--adt-accent-soft, rgba(15, 118, 110, 0.1));
 }
 
-.lini-status-ok > a.lini-link {
-  border-color: color-mix(in srgb, var(--adt-admonition-tip, #41af46) 55%, var(--adt-border, #d9dee7));
+/* Live-probe validity: show muted chrome only after status is surfaced */
+.lini.is-status-visible.lini-status-ok > a.lini-link {
+  border: 1px solid color-mix(in srgb, var(--adt-admonition-tip, #41af46) 55%, var(--adt-border, #d9dee7));
   background: color-mix(in srgb, var(--adt-admonition-tip, #41af46) 14%, transparent);
+  padding: 0.05em 0.2em;
 }
 
-.lini-status-invalid > a.lini-link,
-.lini-status-4xx > a.lini-link,
-.lini-status-5xx > a.lini-link {
-  border-color: color-mix(in srgb, var(--adt-admonition-important, #d32f2f) 50%, var(--adt-border, #d9dee7));
+.lini.is-status-visible.lini-status-invalid > a.lini-link,
+.lini.is-status-visible.lini-status-4xx > a.lini-link,
+.lini.is-status-visible.lini-status-5xx > a.lini-link {
+  border: 1px solid color-mix(in srgb, var(--adt-admonition-important, #d32f2f) 50%, var(--adt-border, #d9dee7));
   background: color-mix(in srgb, var(--adt-admonition-important, #d32f2f) 12%, transparent);
+  padding: 0.05em 0.2em;
 }
 
-.lini-status-unknown > a.lini-link,
-.lini-status-unchecked > a.lini-link {
-  border-color: color-mix(in srgb, var(--adt-ink-muted, #5a6270) 35%, var(--adt-border, #d9dee7));
+.lini.is-status-visible.lini-status-unknown > a.lini-link,
+.lini.is-status-visible.lini-status-unchecked > a.lini-link {
+  border: 1px solid color-mix(in srgb, var(--adt-ink-muted, #5a6270) 35%, var(--adt-border, #d9dee7));
   background: color-mix(in srgb, var(--adt-ink-muted, #5a6270) 8%, transparent);
+  padding: 0.05em 0.2em;
 }
 
-.lini-status-timeout > a.lini-link {
-  border-color: color-mix(in srgb, var(--adt-admonition-note, #217ee7) 45%, var(--adt-border, #d9dee7));
+.lini.is-status-visible.lini-status-timeout > a.lini-link {
+  border: 1px solid color-mix(in srgb, var(--adt-admonition-note, #217ee7) 45%, var(--adt-border, #d9dee7));
   background: color-mix(in srgb, var(--adt-admonition-note, #217ee7) 12%, transparent);
+  padding: 0.05em 0.2em;
 }
 
 /* Fully out of flow; hidden = display:none (zero footprint) */
