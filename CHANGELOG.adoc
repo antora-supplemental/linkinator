@@ -1,5 +1,9 @@
 = Changelog
 
+== 0.1.5 — 2026-10-17
+
+* **Link-row hover only:** drop `.lini-block` on parent `p`/`li`/…; hover tint and Archive reveal apply to compact `span.lini` (anchor + pill), not whole bullets or paragraphs.
+
 == 0.1.4 — 2026-10-17
 
 * **Styled hover chrome:** block wrapper (`.lini-block`) tints on hover/focus-within using Valentus `--adt-*` tokens; Wayback control is a compact **Archive** pill beside the link (`.lini-actions`), hidden until hover.

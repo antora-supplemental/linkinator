@@ -15,17 +15,27 @@ describe('linkinator wrap', () => {
     assert.equal(waybackUrl('mailto:x@y.z'), null)
   })
 
-  it('wraps external anchors inside article.doc with block hover + Archive pill', () => {
+  it('wraps external anchors inside article.doc with link-row hover + Archive pill', () => {
     const html = '<article class="doc"><p>See <a href="https://example.com/x">Example</a> please.</p></article>'
     const out = wrapExternalLinks(html, { status: 'unchecked' })
     assert.match(out, /class="lini lini-status-unchecked"/)
-    assert.match(out, /lini-block/)
+    assert.doesNotMatch(out, /lini-block/)
     assert.match(out, /lini-actions/)
     assert.match(out, /lini-wayback-label">Archive/)
     assert.match(out, /lini-wayback/)
     assert.match(out, /web\.archive\.org/)
     assert.match(out, /lini-link/)
     assert.match(out, /href="https:\/\/example.com\/x"/)
+  })
+
+  it('does not add lini-block on list items with long prose', () => {
+    const html =
+      '<article class="doc"><ul><li><strong>Hub</strong> — prose before ' +
+      '<a href="https://devcentr.org/">Live site</a> after.</li></ul></article>'
+    const out = wrapExternalLinks(html)
+    assert.match(out, /class="lini lini-status-unchecked"/)
+    assert.doesNotMatch(out, /lini-block/)
+    assert.match(out, /<li><strong>Hub<\/strong>/)
   })
 
   it('skips chrome outside article.doc and page-context asides', () => {
