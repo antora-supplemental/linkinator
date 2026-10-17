@@ -58,7 +58,7 @@ Env on that stub: `PROBE_ALLOWLIST` (optional host suffix allowlist), `CORS_ORIG
 
 == Demo data
 
-* **Supplement lives in extension repo** — Linkinator wraps outbound links in composed site HTML; wire prose from link:https://github.com/antora-supplemental/demo-data[`demo-data`^] `docs/theme-demo` or your hub components rather than maintaining a duplicate link corpus here.
+* **Supplement lives in extension repo** — Linkinator wraps outbound links in composed site HTML; wire prose from link:https://github.com/antora-supplemental/demo-data[`demo-data`^] `docs/demo-pages` or your hub components rather than maintaining a duplicate link corpus here.
 * Live probe wiring stays in this repo / link:https://github.com/antora-supplemental/asciidoc-link-validator[`asciidoc-link-validator`^] `examples/dispatch-proxy`.
 * Pattern: link:https://docs.antora-supplemental.org/docs/ROOT/proposals/demo-data-catalog.html[Demo data catalog^].
 
