@@ -21,7 +21,7 @@ describe('linkinator wrap', () => {
     assert.match(out, /class="lini lini-status-unchecked"/)
     assert.doesNotMatch(out, /lini-block/)
     assert.match(out, /lini-actions/)
-    assert.match(out, /lini-wayback-label">Archive/)
+    assert.match(out, /lini-wayback-icon" aria-hidden="true">⧉/)
     assert.match(out, /lini-wayback/)
     assert.match(out, /web\.archive\.org/)
     assert.match(out, /lini-link/)

@@ -1,31 +1,15 @@
-/* Linkinator: validity chrome + hover Wayback control (Valentus --adt-* tokens) */
+/* Linkinator: validity chrome + floating Wayback control (Valentus --adt-* tokens) */
 
 .lini {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 0.35rem;
-  max-width: 100%;
-  vertical-align: baseline;
+  display: inline;
   position: relative;
-  box-sizing: border-box;
-  padding: 0.12em 0.4em;
-  margin: 0 0.05em;
-  border-radius: var(--adt-radius-sm, 0.25rem);
-  border: 1px solid transparent;
-  transition: var(--adt-transition, background-color 0.2s ease, border-color 0.2s ease);
-}
-
-.lini:hover,
-.lini:focus-within {
-  background: var(--adt-accent-soft, rgba(15, 118, 110, 0.1));
-  border-color: color-mix(in srgb, var(--adt-accent, #0f766e) 22%, transparent);
+  vertical-align: baseline;
 }
 
 .lini > a.lini-link {
   border: 1px solid transparent;
   border-radius: var(--adt-radius-sm, 0.25rem);
-  padding: 0;
+  padding: 0.05em 0.2em;
   margin: 0;
   text-decoration: underline;
   text-underline-offset: 0.15em;
@@ -34,19 +18,14 @@
   transition: var(--adt-transition, border-color 0.15s ease, background-color 0.15s ease);
 }
 
-.lini-status-ok {
-  border-color: color-mix(in srgb, var(--adt-admonition-tip, #41af46) 40%, transparent);
+.lini > a.lini-link:hover,
+.lini:focus-within > a.lini-link {
+  background: var(--adt-accent-soft, rgba(15, 118, 110, 0.1));
 }
 
 .lini-status-ok > a.lini-link {
   border-color: color-mix(in srgb, var(--adt-admonition-tip, #41af46) 55%, var(--adt-border, #d9dee7));
   background: color-mix(in srgb, var(--adt-admonition-tip, #41af46) 14%, transparent);
-}
-
-.lini-status-invalid,
-.lini-status-4xx,
-.lini-status-5xx {
-  border-color: color-mix(in srgb, var(--adt-admonition-important, #d32f2f) 35%, transparent);
 }
 
 .lini-status-invalid > a.lini-link,
@@ -56,19 +35,10 @@
   background: color-mix(in srgb, var(--adt-admonition-important, #d32f2f) 12%, transparent);
 }
 
-.lini-status-unknown,
-.lini-status-unchecked {
-  border-color: color-mix(in srgb, var(--adt-ink-muted, #5a6270) 25%, transparent);
-}
-
 .lini-status-unknown > a.lini-link,
 .lini-status-unchecked > a.lini-link {
   border-color: color-mix(in srgb, var(--adt-ink-muted, #5a6270) 35%, var(--adt-border, #d9dee7));
   background: color-mix(in srgb, var(--adt-ink-muted, #5a6270) 8%, transparent);
-}
-
-.lini-status-timeout {
-  border-color: color-mix(in srgb, var(--adt-admonition-note, #217ee7) 30%, transparent);
 }
 
 .lini-status-timeout > a.lini-link {
@@ -76,21 +46,24 @@
   background: color-mix(in srgb, var(--adt-admonition-note, #217ee7) 12%, transparent);
 }
 
+/* Out of inline flow — floats above the link over surrounding prose */
 .lini-actions {
-  display: inline-flex;
+  position: absolute;
+  z-index: 25;
+  left: 0;
+  bottom: calc(100% + 3px);
+  display: flex;
   align-items: center;
-  flex-shrink: 0;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(0.05em);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
 }
 
 .lini:hover .lini-actions,
 .lini:focus-within .lini-actions {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
 }
 
 .lini-wayback {
@@ -98,22 +71,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
   box-sizing: border-box;
-  min-height: 1.35rem;
+  width: 1.35rem;
+  height: 1.35rem;
   margin: 0;
-  padding: 0.12rem 0.45rem;
+  padding: 0;
   border: 1px solid var(--adt-chrome-border, var(--adt-border, #d9dee7));
-  border-radius: 999px;
+  border-radius: var(--adt-radius-sm, 0.25rem);
   background: var(--adt-elevated, #fff);
   color: var(--adt-ink-muted, #5a6270);
-  font-family: var(--adt-font, inherit);
+  font: inherit;
   font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1.2;
+  line-height: 1;
   cursor: pointer;
-  vertical-align: middle;
   box-shadow: var(--adt-shadow-float, 0 0.15rem 0.45rem rgba(20, 24, 32, 0.08));
   transition: var(--adt-transition, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease);
 }
@@ -130,17 +100,12 @@
 }
 
 .lini-wayback-icon {
-  display: inline-flex;
-  width: 0.85rem;
-  height: 0.85rem;
-  flex-shrink: 0;
-  background: currentColor;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M4 7h16v12H4z'/%3E%3Cpath d='M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/%3E%3Cpath d='M9 12h6'/%3E%3C/svg%3E") center / contain no-repeat;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M4 7h16v12H4z'/%3E%3Cpath d='M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/%3E%3Cpath d='M9 12h6'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-.lini-wayback-label {
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
 }
 
 .lini-status-text {
@@ -154,7 +119,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lini,
   .lini-actions,
   .lini-wayback,
   .lini > a.lini-link {

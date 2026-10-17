@@ -1,5 +1,10 @@
 = Changelog
 
+== 0.1.6 — 2026-10-17
+
+* Restore pre-v0.1.4 **⧉** Wayback icon (icon-only control, no inline “Archive” label).
+* **Floating overlay:** `.lini-actions` is `position: absolute` above the link (out of prose line flow); hover tint stays on `a.lini-link` only.
+
 == 0.1.5 — 2026-10-17
 
 * **Link-row hover only:** drop `.lini-block` on parent `p`/`li`/…; hover tint and Archive reveal apply to compact `span.lini` (anchor + pill), not whole bullets or paragraphs.
