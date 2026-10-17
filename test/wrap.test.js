@@ -15,13 +15,14 @@ describe('linkinator wrap', () => {
     assert.equal(waybackUrl('mailto:x@y.z'), null)
   })
 
-  it('wraps external anchors inside article.doc with link-row hover + Archive pill', () => {
+  it('wraps external anchors with inline ext icon + hover Archive', () => {
     const html = '<article class="doc"><p>See <a href="https://example.com/x">Example</a> please.</p></article>'
     const out = wrapExternalLinks(html, { status: 'unchecked' })
     assert.match(out, /class="lini lini-status-unchecked"/)
     assert.doesNotMatch(out, /lini-block/)
+    assert.match(out, /class="lini-ext"/)
     assert.match(out, /lini-actions/)
-    assert.match(out, /lini-wayback-icon" aria-hidden="true">⧉/)
+    assert.match(out, /lini-wayback-icon" aria-hidden="true"><\/span>/)
     assert.match(out, /lini-wayback/)
     assert.match(out, /web\.archive\.org/)
     assert.match(out, /lini-link/)

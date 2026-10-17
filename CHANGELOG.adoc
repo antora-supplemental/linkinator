@@ -1,5 +1,10 @@
 = Changelog
 
+== 0.1.9 — 2026-10-17
+
+* **Inline external icon:** every wrapped link shows a small in-flow `.lini-ext` affordance beside the anchor.
+* **Hover Archive:** Wayback archive control floats next to the external icon on link-cluster hover (`display: none` when idle); `::after` bridge for click path.
+
 == 0.1.8 — 2026-10-17
 
 * **Wayback chip placement:** `.lini-actions` anchors to the link’s right edge (`left: 100%` + gap), vertically centered (`top: 50%` / `translateY(-50%)`) instead of floating above the line.
