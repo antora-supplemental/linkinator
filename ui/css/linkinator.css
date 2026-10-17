@@ -1,12 +1,16 @@
 /* Linkinator: validity chrome + floating Wayback control (Valentus --adt-* tokens) */
 
+/* Shrink-wrap the anchor; absolutely positioned children do not expand this box */
 .lini {
-  display: inline;
+  display: inline-block;
   position: relative;
   vertical-align: baseline;
+  max-width: 100%;
+  line-height: inherit;
 }
 
 .lini > a.lini-link {
+  display: inline;
   border: 1px solid transparent;
   border-radius: var(--adt-radius-sm, 0.25rem);
   padding: 0.05em 0.2em;
@@ -46,23 +50,26 @@
   background: color-mix(in srgb, var(--adt-admonition-note, #217ee7) 12%, transparent);
 }
 
-/* Out of inline flow — floats above the link over surrounding prose */
+/* Fully out of flow; hidden = display:none (zero footprint) */
 .lini-actions {
   position: absolute;
   z-index: 25;
   left: 0;
   bottom: calc(100% + 3px);
-  display: flex;
+  display: none;
   align-items: center;
-  opacity: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: max-content;
+  max-width: none;
   pointer-events: none;
   white-space: nowrap;
-  transition: opacity 0.15s ease;
 }
 
 .lini:hover .lini-actions,
 .lini:focus-within .lini-actions {
-  opacity: 1;
+  display: flex;
   pointer-events: auto;
 }
 
@@ -119,7 +126,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lini-actions,
   .lini-wayback,
   .lini > a.lini-link {
     transition: none;

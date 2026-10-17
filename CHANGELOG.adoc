@@ -1,5 +1,9 @@
 = Changelog
 
+== 0.1.7 — 2026-10-17
+
+* **Zero layout footprint:** idle `.lini-actions` uses `display: none` (not opacity-only in flow); `span.lini` is `inline-block` sized by the anchor only so the ⧉ chip never reserves line space until hover.
+
 == 0.1.6 — 2026-10-17
 
 * Restore pre-v0.1.4 **⧉** Wayback icon (icon-only control, no inline “Archive” label).
