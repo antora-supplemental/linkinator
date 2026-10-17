@@ -1,5 +1,10 @@
 = Changelog
 
+== 0.1.4 — 2026-10-17
+
+* **Styled hover chrome:** block wrapper (`.lini-block`) tints on hover/focus-within using Valentus `--adt-*` tokens; Wayback control is a compact **Archive** pill beside the link (`.lini-actions`), hidden until hover.
+* **Assets on published pages:** injects `linkinator.css` + `linkinator.js` `<link>` / `<script>` tags (after `site.js`) so hubs do not need duplicate supplemental-ui copies.
+
 == 0.1.3 — 2026-10-16
 
 * Display name **Linkinator** (replaces informal “Link-inator”) in registry metadata, docs, and extension-lister labels.

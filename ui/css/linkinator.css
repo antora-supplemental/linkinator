@@ -1,56 +1,79 @@
-/* Linkinator: muted validity colors + hover Wayback bar */
-.lini {
-  display: inline;
-  position: relative;
-}
-.lini > a {
-  border: 1px solid transparent;
-  border-radius: 0;
-  padding: 0 0.1em;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.lini-status-ok > a {
-  border-color: #86efac;
-  background: rgba(134, 239, 172, 0.18);
-  color: inherit;
-}
-.lini-status-invalid > a,
-.lini-status-4xx > a,
-.lini-status-5xx > a {
-  border-color: #fca5a5;
-  background: rgba(252, 165, 165, 0.18);
-  color: inherit;
-}
-.lini-status-unknown > a,
-.lini-status-unchecked > a {
-  border-color: #d4d4d8;
-  background: rgba(212, 212, 216, 0.14);
-}
-.lini-status-timeout > a {
-  border-color: #a5b4fc;
-  background: rgba(165, 180, 252, 0.16);
+/* Linkinator: validity chrome + hover Wayback control (Valentus --adt-* tokens) */
+
+.lini-block {
+  border-radius: var(--adt-radius-sm, 0.25rem);
+  padding: 0.2em 0.45em;
+  margin-inline: -0.45em;
+  transition: var(--adt-transition, background-color 0.2s ease, color 0.2s ease);
 }
 
-.lini-hoverbar {
-  position: absolute;
-  z-index: 20;
-  left: 0;
-  bottom: calc(100% + 2px);
-  display: none;
-  align-items: center;
-  gap: 0.15rem;
-  padding: 0.12rem 0.2rem;
-  border: 1px solid #a1a1aa;
-  border-radius: 2px;
-  background: #fafafa;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-  white-space: nowrap;
-  pointer-events: auto;
+.lini-block:hover,
+.lini-block:focus-within {
+  background: var(--adt-accent-soft, rgba(15, 118, 110, 0.1));
 }
-.lini:hover .lini-hoverbar,
-.lini:focus-within .lini-hoverbar {
+
+.lini {
   display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  max-width: 100%;
+  vertical-align: baseline;
+  position: relative;
+}
+
+.lini > a.lini-link {
+  border: 1px solid transparent;
+  border-radius: var(--adt-radius-sm, 0.25rem);
+  padding: 0.05em 0.2em;
+  margin: -0.05em -0.2em;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-color: color-mix(in srgb, var(--adt-accent, #0f766e) 45%, transparent);
+  color: inherit;
+  transition: var(--adt-transition, border-color 0.15s ease, background-color 0.15s ease);
+}
+
+.lini-status-ok > a.lini-link {
+  border-color: color-mix(in srgb, var(--adt-admonition-tip, #41af46) 55%, var(--adt-border, #d9dee7));
+  background: color-mix(in srgb, var(--adt-admonition-tip, #41af46) 14%, transparent);
+}
+
+.lini-status-invalid > a.lini-link,
+.lini-status-4xx > a.lini-link,
+.lini-status-5xx > a.lini-link {
+  border-color: color-mix(in srgb, var(--adt-admonition-important, #d32f2f) 50%, var(--adt-border, #d9dee7));
+  background: color-mix(in srgb, var(--adt-admonition-important, #d32f2f) 12%, transparent);
+}
+
+.lini-status-unknown > a.lini-link,
+.lini-status-unchecked > a.lini-link {
+  border-color: color-mix(in srgb, var(--adt-ink-muted, #5a6270) 35%, var(--adt-border, #d9dee7));
+  background: color-mix(in srgb, var(--adt-ink-muted, #5a6270) 8%, transparent);
+}
+
+.lini-status-timeout > a.lini-link {
+  border-color: color-mix(in srgb, var(--adt-admonition-note, #217ee7) 45%, var(--adt-border, #d9dee7));
+  background: color-mix(in srgb, var(--adt-admonition-note, #217ee7) 12%, transparent);
+}
+
+.lini-actions {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.05em);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.lini-block:hover .lini-actions,
+.lini-block:focus-within .lini-actions,
+.lini:hover .lini-actions,
+.lini:focus-within .lini-actions {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .lini-wayback {
@@ -58,39 +81,66 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.25rem;
   box-sizing: border-box;
-  width: 1.15rem;
-  height: 1.15rem;
+  min-height: 1.35rem;
   margin: 0;
-  padding: 0;
-  border: 1px solid #a1a1aa;
-  border-radius: 2px;
-  background: #fff;
-  color: #52525b;
-  font: inherit;
-  font-size: 0.62rem;
-  line-height: 1;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid var(--adt-chrome-border, var(--adt-border, #d9dee7));
+  border-radius: 999px;
+  background: var(--adt-elevated, #fff);
+  color: var(--adt-ink-muted, #5a6270);
+  font-family: var(--adt-font, inherit);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
   cursor: pointer;
   vertical-align: middle;
+  box-shadow: var(--adt-shadow-float, 0 0.15rem 0.45rem rgba(20, 24, 32, 0.08));
+  transition: var(--adt-transition, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease);
 }
+
 .lini-wayback:hover {
-  background: #f4f4f5;
-  border-color: #71717a;
+  background: var(--adt-accent-soft, rgba(15, 118, 110, 0.1));
+  border-color: color-mix(in srgb, var(--adt-accent, #0f766e) 35%, var(--adt-border, #d9dee7));
+  color: var(--adt-accent, #0f766e);
 }
+
+.lini-wayback:focus-visible {
+  outline: 2px solid var(--adt-accent, #0f766e);
+  outline-offset: 2px;
+}
+
 .lini-wayback-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  line-height: 1;
+  display: inline-flex;
+  width: 0.85rem;
+  height: 0.85rem;
+  flex-shrink: 0;
+  background: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M4 7h16v12H4z'/%3E%3Cpath d='M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/%3E%3Cpath d='M9 12h6'/%3E%3C/svg%3E") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M4 7h16v12H4z'/%3E%3Cpath d='M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/%3E%3Cpath d='M9 12h6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.lini-wayback-label {
+  white-space: nowrap;
 }
 
 .lini-status-text {
   margin-left: 0.25em;
   font-size: 0.75em;
-  color: #71717a;
+  color: var(--adt-ink-muted, #71717a);
 }
+
 .lini.is-status-visible .lini-status-text {
   display: inline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lini-block,
+  .lini-actions,
+  .lini-wayback,
+  .lini > a.lini-link {
+    transition: none;
+  }
 }

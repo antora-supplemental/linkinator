@@ -9,7 +9,7 @@
 
 * Wraps outbound `http(s)` anchors in `article.doc` prose only (skips header, footer, and `page-context` metadata)
 * Muted validity background + **sharp** 1px border (ok / invalid / unchecked / …)
-* archive.org **Wayback** control in a compact hover/focus bar (`.lini-hoverbar`), not inline beside every link
+* archive.org **Wayback** control as an **Archive** pill beside the link (`.lini-actions`), shown on block/link hover — not embedded in prose
 * Optional live probe via `window.LINKINATOR_PROBE_URL` proxy (no secrets in the page)
 
 == Install
@@ -31,7 +31,7 @@ antora:
       statusDefault: unchecked
 ----
 
-Ship `ui/css/linkinator.css` + `ui/js/linkinator.js` via supplemental UI (or rely on the extension's `siteCatalog` inject under `_/`).
+When `injectAssets` is true (default), the extension publishes `/_/css/linkinator.css` + `/_/js/linkinator.js` and injects `<link>` / `<script>` tags into composed pages (after `site.js`). Hubs may mirror assets in supplemental UI but should not duplicate script tags.
 
 == Live probe (`LINKINATOR_PROBE_URL`)
 
