@@ -1,5 +1,9 @@
 = Changelog
 
+== 0.1.8 — 2026-10-17
+
+* **Wayback chip placement:** `.lini-actions` anchors to the link’s right edge (`left: 100%` + gap), vertically centered (`top: 50%` / `translateY(-50%)`) instead of floating above the line.
+
 == 0.1.7 — 2026-10-17
 
 * **Zero layout footprint:** idle `.lini-actions` uses `display: none` (not opacity-only in flow); `span.lini` is `inline-block` sized by the anchor only so the ⧉ chip never reserves line space until hover.

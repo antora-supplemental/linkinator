@@ -62,8 +62,9 @@
 .lini-actions {
   position: absolute;
   z-index: 25;
-  left: 0;
-  bottom: calc(100% + 3px);
+  left: calc(100% + 0.35rem);
+  top: 50%;
+  transform: translateY(-50%);
   display: none;
   align-items: center;
   margin: 0;
@@ -79,6 +80,7 @@
 .lini:focus-within .lini-actions {
   display: flex;
   pointer-events: auto;
+  transform: translateY(-50%);
 }
 
 .lini-wayback {
