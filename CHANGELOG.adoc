@@ -1,5 +1,9 @@
 = Changelog
 
+== 0.1.10 — 2026-10-17
+
+* **Wayback chip hover/focus:** `.lini-wayback` keeps an opaque `--adt-elevated` base on `:hover`, `:active`, and `:focus-visible` (accent tint via `color-mix`, not transparent `--adt-accent-soft`).
+
 == 0.1.9 — 2026-10-17
 
 * **Inline external icon:** every wrapped link shows a small in-flow `.lini-ext` affordance beside the anchor.

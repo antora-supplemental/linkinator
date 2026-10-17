@@ -134,10 +134,17 @@
   transition: var(--adt-transition, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease);
 }
 
-.lini-wayback:hover {
-  background: var(--adt-accent-soft, rgba(15, 118, 110, 0.1));
+/* Opaque tint on elevated surface (link hover may use transparent --adt-accent-soft) */
+.lini-wayback:hover,
+.lini-wayback:active,
+.lini-wayback:focus-visible {
+  background: color-mix(in srgb, var(--adt-accent, #0f766e) 10%, var(--adt-elevated, #fff));
   border-color: color-mix(in srgb, var(--adt-accent, #0f766e) 35%, var(--adt-border, #d9dee7));
   color: var(--adt-accent, #0f766e);
+}
+
+.lini-wayback:active {
+  background: color-mix(in srgb, var(--adt-accent, #0f766e) 14%, var(--adt-elevated, #fff));
 }
 
 .lini-wayback:focus-visible {
