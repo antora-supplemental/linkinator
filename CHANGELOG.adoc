@@ -1,8 +1,13 @@
 = Changelog
 
+== 0.1.11 — 2026-10-21
+
+* **Metadata exclusions:** configurable `exclude` selectors (default skips `.page-context`, `.page-context-source-line`, `.page-context-source-actions`, `[data-zone="header"]`, `[data-zone="meta"]`) so View|Edit and page-context links are never wrapped.
+* **Optional scope:** `scope` or auto-detect `[data-zone="body"]` limits wrapping to article body zones when the theme segments the article.
+
 == 0.1.10 — 2026-10-17
 
-* **Wayback chip hover/focus:** `.lini-wayback` keeps an opaque `--adt-elevated` base on `:hover`, `:active`, and `:focus-visible` (accent tint via `color-mix`, not transparent `--adt-accent-soft`).
+* **Wayback chip hover/focus:** `.lini-wayback` keeps an opaque `--valentus-elevated` base on `:hover`, `:active`, and `:focus-visible` (accent tint via `color-mix`, not transparent `--valentus-accent-soft`).
 
 == 0.1.9 — 2026-10-17
 
@@ -17,7 +22,7 @@
 == 0.1.7 — 2026-10-17
 
 * **Zero layout footprint:** idle `.lini-actions` uses `display: none` (not opacity-only in flow); `span.lini` is `inline-block` sized by the anchor only so the ⧉ chip never reserves line space until hover.
-* **Transparent at rest:** `a.lini-link` matches theme prose links (no default border/background/pill); hover/focus adds `--adt-accent-soft`. Validity borders appear only after live probe (`.is-status-visible`).
+* **Transparent at rest:** `a.lini-link` matches theme prose links (no default border/background/pill); hover/focus adds `--valentus-accent-soft`. Validity borders appear only after live probe (`.is-status-visible`).
 
 == 0.1.6 — 2026-10-17
 
@@ -30,7 +35,7 @@
 
 == 0.1.4 — 2026-10-17
 
-* **Styled hover chrome:** block wrapper (`.lini-block`) tints on hover/focus-within using Valentus `--adt-*` tokens; Wayback control is a compact **Archive** pill beside the link (`.lini-actions`), hidden until hover.
+* **Styled hover chrome:** block wrapper (`.lini-block`) tints on hover/focus-within using Valentus `--valentus-*` tokens; Wayback control is a compact **Archive** pill beside the link (`.lini-actions`), hidden until hover.
 * **Assets on published pages:** injects `linkinator.css` + `linkinator.js` `<link>` / `<script>` tags (after `site.js`) so hubs do not need duplicate supplemental-ui copies.
 
 == 0.1.3 — 2026-10-16

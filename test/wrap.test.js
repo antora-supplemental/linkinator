@@ -2,7 +2,7 @@
 
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
-const { wrapExternalLinks, waybackUrl } = require('../lib/wrap.js')
+const { wrapExternalLinks, waybackUrl, DEFAULT_EXCLUDE } = require('../lib/wrap.js')
 const ext = require('../lib/extension.js')
 const meta = require('../lib/registry-meta.js')
 
@@ -49,6 +49,41 @@ describe('linkinator wrap', () => {
     const twice = wrapExternalLinks(once)
     assert.equal(once, twice)
     assert.equal(wrapExternalLinks('<article class="doc"><a href="/local/">x</a></article>'), '<article class="doc"><a href="/local/">x</a></article>')
+  })
+
+  it('does not wrap View|Edit in page-context-source-line', () => {
+    const html =
+      '<article class="doc">' +
+      '<div class="page-context-source-line">' +
+      '<span class="page-context-source-actions">' +
+      '<a href="https://github.com/view">View</a> | <a href="https://github.com/edit">Edit</a>' +
+      '</span></div>' +
+      '<p>See <a href="https://example.com/doc">doc</a>.</p></article>'
+    const out = wrapExternalLinks(html)
+    const sourceChunk = out.slice(out.indexOf('page-context-source-line'), out.indexOf('</div>') + 6)
+    assert.doesNotMatch(sourceChunk, /lini-link/)
+    assert.match(out, /lini-wayback/)
+    assert.match(out, /example\.com\/doc/)
+  })
+
+  it('skips data-zone header/meta and wraps only data-zone body when zoned', () => {
+    const html =
+      '<article class="doc">' +
+      '<div data-zone="header"><a href="https://header.example/h">H</a></div>' +
+      '<div data-zone="body"><p><a href="https://body.example/b">B</a></p></div>' +
+      '<aside class="page-context-footer" data-zone="meta">' +
+      '<a href="https://meta.example/m">M</a></aside></article>'
+    const out = wrapExternalLinks(html)
+    const headerZone = out.match(/<div data-zone="header">[\s\S]*?<\/div>/)?.[0] ?? ''
+    const metaZone = out.match(/<aside[^>]*data-zone="meta"[\s\S]*?<\/aside>/)?.[0] ?? ''
+    assert.doesNotMatch(headerZone, /lini-link/)
+    assert.doesNotMatch(metaZone, /lini-link/)
+    assert.match(out, /body\.example[\s\S]*lini-link/)
+  })
+
+  it('exposes default exclude selectors for metadata chrome', () => {
+    assert.ok(Array.isArray(DEFAULT_EXCLUDE))
+    assert.ok(DEFAULT_EXCLUDE.some((s) => String(s).includes('page-context-source-line')))
   })
 
   it('exports register + registry meta', () => {
