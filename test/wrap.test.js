@@ -2,7 +2,7 @@
 
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
-const { wrapExternalLinks, waybackUrl, DEFAULT_EXCLUDE } = require('../lib/wrap.js')
+const { wrapExternalLinks, waybackUrl, DEFAULT_EXCLUDE, LEGACY_EXCLUDE } = require('../lib/wrap.js')
 const ext = require('../lib/extension.js')
 const meta = require('../lib/registry-meta.js')
 
@@ -51,19 +51,32 @@ describe('linkinator wrap', () => {
     assert.equal(wrapExternalLinks('<article class="doc"><a href="/local/">x</a></article>'), '<article class="doc"><a href="/local/">x</a></article>')
   })
 
-  it('does not wrap View|Edit in page-context-source-line', () => {
+  it('does not wrap header chrome when article is zoned', () => {
+    const html =
+      '<article class="doc" data-zone-root>' +
+      '<header data-zone="header">' +
+      '<div class="page-context-source-line">' +
+      '<span class="page-context-source-actions">' +
+      '<a href="https://github.com/view">View</a> | <a href="https://github.com/edit">Edit</a>' +
+      '</span></div></header>' +
+      '<div data-zone="body"><p>See <a href="https://example.com/doc">doc</a>.</p></div></article>'
+    const out = wrapExternalLinks(html)
+    const headerZone = out.match(/<header data-zone="header">[\s\S]*?<\/header>/)?.[0] ?? ''
+    assert.doesNotMatch(headerZone, /lini-link/)
+    assert.match(out, /example\.com\/doc[\s\S]*lini-link/)
+  })
+
+  it('legacy flat article still skips page-context-source-line', () => {
     const html =
       '<article class="doc">' +
       '<div class="page-context-source-line">' +
       '<span class="page-context-source-actions">' +
-      '<a href="https://github.com/view">View</a> | <a href="https://github.com/edit">Edit</a>' +
-      '</span></div>' +
+      '<a href="https://github.com/view">View</a></span></div>' +
       '<p>See <a href="https://example.com/doc">doc</a>.</p></article>'
     const out = wrapExternalLinks(html)
     const sourceChunk = out.slice(out.indexOf('page-context-source-line'), out.indexOf('</div>') + 6)
     assert.doesNotMatch(sourceChunk, /lini-link/)
     assert.match(out, /lini-wayback/)
-    assert.match(out, /example\.com\/doc/)
   })
 
   it('skips data-zone header/meta and wraps only data-zone body when zoned', () => {
@@ -81,9 +94,9 @@ describe('linkinator wrap', () => {
     assert.match(out, /body\.example[\s\S]*lini-link/)
   })
 
-  it('exposes default exclude selectors for metadata chrome', () => {
-    assert.ok(Array.isArray(DEFAULT_EXCLUDE))
-    assert.ok(DEFAULT_EXCLUDE.some((s) => String(s).includes('page-context-source-line')))
+  it('exposes legacy exclude selectors for flat articles', () => {
+    assert.deepEqual(DEFAULT_EXCLUDE, LEGACY_EXCLUDE)
+    assert.ok(LEGACY_EXCLUDE.some((s) => String(s).includes('page-context')))
   })
 
   it('exports register + registry meta', () => {

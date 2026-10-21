@@ -1,5 +1,10 @@
 = Changelog
 
+== 0.1.12 — 2026-10-21
+
+* **Body-only scope:** auto-detect `[data-zone="body"]` and wrap external links only inside that subtree (no page-context / header / meta exclude list when zoned).
+* **Legacy flat articles:** minimal default `exclude` (`.page-context`, `.page-context-source-line`) when no body zone is present.
+
 == 0.1.11 — 2026-10-21
 
 * **Metadata exclusions:** configurable `exclude` selectors (default skips `.page-context`, `.page-context-source-line`, `.page-context-source-actions`, `[data-zone="header"]`, `[data-zone="meta"]`) so View|Edit and page-context links are never wrapped.
