@@ -159,21 +159,19 @@ describe('linkinator wrap', () => {
     assert.equal(matchesUrlPattern('https://example.com/archive-2', 'https://example.com/archive/'), false)
   })
 
-  it('supports human-readable linkinator-skip role plus skip-linkinator and legacy lini-skip aliases', () => {
-    assert.ok(DEFAULT_SKIP_ROLES.includes('linkinator-skip'))
-    assert.ok(DEFAULT_SKIP_ROLES.includes('skip-linkinator'))
-    assert.ok(DEFAULT_SKIP_ROLES.includes('lini-skip'))
+  it('skips links marked with the semantic archival role (no aliases)', () => {
+    assert.deepEqual(DEFAULT_SKIP_ROLES, ['archival'])
     const html =
       '<article class="doc"><p>' +
-      '<a href="https://a.example/" class="linkinator-skip">A</a> ' +
-      '<a href="https://b.example/" class="bare skip-linkinator">B</a> ' +
+      '<a href="https://a.example/" class="archival">A</a> ' +
+      '<a href="https://b.example/" class="bare archival">B</a> ' +
       '<a href="https://c.example/" class="lini-skip">C</a> ' +
       '<a href="https://d.example/">D</a>' +
       '</p></article>'
     const out = wrapExternalLinks(html)
-    assert.match(out, /<a href="https:\/\/a\.example\/" class="linkinator-skip">A<\/a>/)
-    assert.match(out, /<a href="https:\/\/b\.example\/" class="bare skip-linkinator">B<\/a>/)
-    assert.match(out, /<a href="https:\/\/c\.example\/" class="lini-skip">C<\/a>/)
+    assert.match(out, /<a href="https:\/\/a\.example\/" class="archival">A<\/a>/)
+    assert.match(out, /<a href="https:\/\/b\.example\/" class="bare archival">B<\/a>/)
+    assert.match(out, /c\.example\/"[^>]*>C<\/a><span class="lini-ext"/)
     assert.match(out, /d\.example\/"[^>]*>D<\/a><span class="lini-ext"/)
   })
 
