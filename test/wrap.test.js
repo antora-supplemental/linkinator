@@ -2,7 +2,15 @@
 
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
-const { wrapExternalLinks, waybackUrl, DEFAULT_EXCLUDE, LEGACY_EXCLUDE } = require('../lib/wrap.js')
+const {
+  wrapExternalLinks,
+  waybackUrl,
+  matchesUrlPattern,
+  DEFAULT_EXCLUDE,
+  LEGACY_EXCLUDE,
+  DEFAULT_ARCHIVE_PROVIDERS,
+  DEFAULT_SKIP_ROLES,
+} = require('../lib/wrap.js')
 const ext = require('../lib/extension.js')
 const meta = require('../lib/registry-meta.js')
 
@@ -97,6 +105,76 @@ describe('linkinator wrap', () => {
   it('exposes legacy exclude selectors for flat articles', () => {
     assert.deepEqual(DEFAULT_EXCLUDE, LEGACY_EXCLUDE)
     assert.ok(LEGACY_EXCLUDE.some((s) => String(s).includes('page-context')))
+  })
+
+  it('skips archive.org and subdomains by default without wrapping', () => {
+    assert.deepEqual(DEFAULT_ARCHIVE_PROVIDERS, ['archive.org'])
+    const html =
+      '<article class="doc"><p>' +
+      '<a href="https://customer.io/">Customer.io</a> ' +
+      '<a href="https://web.archive.org/web/20261112124438/https://customer.io/">2026-11-12 snapshot</a> ' +
+      '<a href="https://archive.org/details/example">Archive item</a> ' +
+      '<a href="https://notarchive.org/">Lookalike</a>' +
+      '</p></article>'
+    const out = wrapExternalLinks(html)
+    assert.match(out, /href="https:\/\/customer\.io\/"[^>]*class="lini-link"|class="lini-link"[^>]*href="https:\/\/customer\.io\/"/)
+    assert.match(out, /href="https:\/\/notarchive\.org\/"[^>]*class="lini-link"|class="lini-link"[^>]*href="https:\/\/notarchive\.org\/"/)
+    assert.match(out, /<a href="https:\/\/web\.archive\.org\/web\/20261112124438\/https:\/\/customer\.io\/">2026-11-12 snapshot<\/a>/)
+    assert.match(out, /<a href="https:\/\/archive\.org\/details\/example">Archive item<\/a>/)
+  })
+
+  it('supports custom archiveProviders, extraArchiveProviders, and excludeUrls domains/prefixes', () => {
+    const html =
+      '<article class="doc"><p>' +
+      '<a href="https://perma.cc/ABC1-2345">Perma</a> ' +
+      '<a href="https://internal.example.com/app">Internal</a> ' +
+      '<a href="https://docs.example.com/archive/2026">Archived docs</a> ' +
+      '<a href="https://docs.example.com/archive-other">Not prefix</a> ' +
+      '<a href="https://docs.example.com/live">Live docs</a>' +
+      '</p></article>'
+    const out = wrapExternalLinks(html, {
+      extraArchiveProviders: ['perma.cc'],
+      excludeUrls: ['internal.example.com', 'https://docs.example.com/archive/'],
+    })
+    assert.match(out, /<a href="https:\/\/perma\.cc\/ABC1-2345">Perma<\/a>/)
+    assert.match(out, /<a href="https:\/\/internal\.example\.com\/app">Internal<\/a>/)
+    assert.match(out, /<a href="https:\/\/docs\.example\.com\/archive\/2026">Archived docs<\/a>/)
+    assert.match(out, /docs\.example\.com\/archive-other[\s\S]*lini-wayback/)
+    assert.match(out, /docs\.example\.com\/live[\s\S]*lini-wayback/)
+
+    // Allowing empty archiveProviders opts back into wrapping archive.org
+    const rewrapped = wrapExternalLinks(
+      '<article class="doc"><p><a href="https://web.archive.org/web/*/https://example.com/">WB</a></p></article>',
+      { archiveProviders: [] }
+    )
+    assert.match(rewrapped, /lini-wayback/)
+  })
+
+  it('matches domain, host+path, and full URL prefix patterns accurately', () => {
+    assert.equal(matchesUrlPattern('https://web.archive.org/web/123/https://x.com', 'archive.org'), true)
+    assert.equal(matchesUrlPattern('https://notarchive.org/', 'archive.org'), false)
+    assert.equal(matchesUrlPattern('https://sub.example.com/archive/2026', 'example.com/archive'), true)
+    assert.equal(matchesUrlPattern('https://sub.example.com/archives/2026', 'example.com/archive'), false)
+    assert.equal(matchesUrlPattern('https://example.com/archive/a', 'https://example.com/archive/'), true)
+    assert.equal(matchesUrlPattern('https://example.com/archive-2', 'https://example.com/archive/'), false)
+  })
+
+  it('supports human-readable linkinator-skip role plus skip-linkinator and legacy lini-skip aliases', () => {
+    assert.ok(DEFAULT_SKIP_ROLES.includes('linkinator-skip'))
+    assert.ok(DEFAULT_SKIP_ROLES.includes('skip-linkinator'))
+    assert.ok(DEFAULT_SKIP_ROLES.includes('lini-skip'))
+    const html =
+      '<article class="doc"><p>' +
+      '<a href="https://a.example/" class="linkinator-skip">A</a> ' +
+      '<a href="https://b.example/" class="bare skip-linkinator">B</a> ' +
+      '<a href="https://c.example/" class="lini-skip">C</a> ' +
+      '<a href="https://d.example/">D</a>' +
+      '</p></article>'
+    const out = wrapExternalLinks(html)
+    assert.match(out, /<a href="https:\/\/a\.example\/" class="linkinator-skip">A<\/a>/)
+    assert.match(out, /<a href="https:\/\/b\.example\/" class="bare skip-linkinator">B<\/a>/)
+    assert.match(out, /<a href="https:\/\/c\.example\/" class="lini-skip">C<\/a>/)
+    assert.match(out, /d\.example\/"[^>]*>D<\/a><span class="lini-ext"/)
   })
 
   it('exports register + registry meta', () => {

@@ -1,5 +1,10 @@
 = Changelog
 
+== 0.1.13 — 2026-11-23
+
+* **Skip archive providers by default:** anchors pointing to `archive.org` (and subdomains such as `web.archive.org`) are no longer wrapped with a nested Wayback button. Configurable via `archiveProviders` (default `['archive.org']`), `extraArchiveProviders`, and `excludeUrls` (domains, host+path prefixes, or full URL prefixes).
+* **Human-readable opt-out role:** `role=linkinator-skip` (with `skip-linkinator` alias; legacy `lini-skip` remains supported) skips wrapping on individual links.
+
 == 0.1.12 — 2026-10-21
 
 * **Body-only scope:** auto-detect `[data-zone="body"]` and wrap external links only inside that subtree (no page-context / header / meta exclude list when zoned).

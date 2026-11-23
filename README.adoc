@@ -1,13 +1,16 @@
 = Linkinator
 :description: Click-time outbound link validity hints with muted colors, sharp borders, and an archive.org / Wayback button.
 :page-orig-author: Ryan Johnson
-:page-last-edited: 2026-10-16
+:page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
+:page-last-edited: 2026-11-23
 
 **Linkinator** is a separate Antora UI bolt-on from build-time https://github.com/antora-supplemental/link-validator[link-validator] / https://github.com/antora-supplemental/asciidoc-link-validator[asciidoc-link-validator].
 
 == What it does
 
 * Wraps outbound `http(s)` anchors in `article.doc` prose only (skips header, footer, and `page-context` metadata)
+* Automatically skips links to archive providers (`archive.org` and subdomains by default) so archive links are never wrapped in another Wayback button
+* Supports playbook domain/prefix blacklists (`archive_providers`, `extra_archive_providers`, `exclude_urls`) and explicit per-link opt-out via `role=linkinator-skip` (alias `skip-linkinator`; legacy `lini-skip` still accepted)
 * Muted validity background + **sharp** 1px border (ok / invalid / unchecked / …)
 * archive.org **Wayback** control as an **Archive** pill beside the link (`.lini-actions`), shown on block/link hover — not embedded in prose
 * Optional live probe via `window.LINKINATOR_PROBE_URL` proxy (no secrets in the page)
@@ -29,6 +32,17 @@ antora:
   extensions:
     - require: '@antora-supplemental/linkinator'
       statusDefault: unchecked
+      # Optional: defaults to ['archive.org'] (matches archive.org and subdomains)
+      # archive_providers: ['archive.org']
+      # extra_archive_providers: ['perma.cc', 'archive.today']
+      # exclude_urls: ['internal.example.com', 'https://docs.example.com/archive/']
+----
+
+Per-link opt-out in AsciiDoc:
+
+[source,asciidoc]
+----
+link:https://example.com/[Example,role=linkinator-skip]
 ----
 
 When `injectAssets` is true (default), the extension publishes `/_/css/linkinator.css` + `/_/js/linkinator.js` and injects `<link>` / `<script>` tags into composed pages (after `site.js`). Hubs may mirror assets in supplemental UI but should not duplicate script tags.
